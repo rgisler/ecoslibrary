@@ -25,9 +25,11 @@ public class ConnectionEcosMock extends Connection {
 
    @Override
    public String request(String command) {
-      String result = "<bad request>";
+      String result;
       if (command.contains("get(1,info)")) {
          result = "<REPLY get(1, info)>\n1 ECoS\n1 ProtocolVersion[0.1]\n1 ApplicationVersion[1.0.1]\n1 HardwareVersion[1.3]\n<END 0 (OK)>";
+      } else {
+         result = "<REPLY " + command + ">\n<END 32 (UNKNOWN COMMAND)>";
       }
       return result;
    }

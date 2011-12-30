@@ -18,7 +18,7 @@
 package ch.gitik.ecos;
 
 /**
- * 
+ * Abstrakte Basisklasse fuer Verbindung.
  * @author Roland Gisler
  */
 public abstract class Connection {
@@ -37,8 +37,18 @@ public abstract class Connection {
     *           Antwort die Ausgewertet wird.
     * @return true oder false.
     */
-   protected boolean isOk(String answer) {
-      return (getResJultCode(answer) == 0);
+   protected boolean isResultOk(String answer) {
+      return (getResultCode(answer) == 0);
+   }
+
+   /**
+    * Prueft ob die Antwort vollständig ist.
+    * @param answer
+    *           Antwort die Ausgewertet wird.
+    * @return true oder false.
+    */
+   protected boolean isResultValid(String answer) {
+      return answer.contains("<REPLY") && answer.contains("<END");
    }
 
    /**
@@ -47,8 +57,11 @@ public abstract class Connection {
     *           Antwort die ausgewertet wird.
     * @return Resturncode.
     */
-   private int getResJultCode(String answer) {
-      // TODO: zu implementieren
-      return 0;
+   protected int getResultCode(String answer) {
+      int posStart = answer.indexOf("<END ") + 5;
+      int posEnd = answer.indexOf(' ', posStart);
+      String resultCodeString = answer.substring(posStart, posEnd);
+      int resultCode = Integer.parseInt(resultCodeString);
+      return resultCode;
    }
 }

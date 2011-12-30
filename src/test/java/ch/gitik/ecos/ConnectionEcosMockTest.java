@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * 
+ * Mock-Klasse fuer Simulation.
  * @author Roland Gisler
  */
 public class ConnectionEcosMockTest {
@@ -30,7 +30,17 @@ public class ConnectionEcosMockTest {
    @Test
    public void testGetEcOS() {
       Connection con = new ConnectionEcosMock();
-      assertTrue(con.request("get(1,info)").contains("<REPLY"));
+      String answer = con.request("get(1,info)");
+      assertTrue(con.isResultValid(answer));
+      assertTrue(con.isResultOk(answer));
    }
 
+   @Test
+   public void testInvalidCommand() {
+      Connection con = new ConnectionEcosMock();
+      String answer = con.request("get(1,unknown)");
+      assertTrue(con.isResultValid(answer));
+      assertFalse(con.isResultOk(answer));
+      assertEquals(32, con.getResultCode(answer));
+   }
 }
