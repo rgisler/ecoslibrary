@@ -44,6 +44,6 @@ public class ConnectionTest {
 
    @Test
    public void testGetAttribute() {
-      assertEquals("value", Connection.getAttribute("something AnAttribute[value] other stuff", "AnAttribute"));
+      assertEquals("value", AbstractConnection.getAttribute("something AnAttribute[value] other stuff", "AnAttribute"));
    }
 }

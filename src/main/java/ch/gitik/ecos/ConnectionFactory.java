@@ -16,13 +16,13 @@
 package ch.gitik.ecos;
 
 /**
- * Factory fuer Connection-Objekte.
+ * Factory fuer AbstractConnection-Objekte.
  * @author Roland Gisler
  */
 public final class ConnectionFactory {
 
    /**
-    * Privater Konstruktor. 
+    * Privater Konstruktor.
     */
    private ConnectionFactory() {
    }
@@ -31,7 +31,7 @@ public final class ConnectionFactory {
     * Statische Factory Methode.
     * @return Liefert immer ein Mock.
     */
-   public static Connection getConnection() {
+   public static AbstractConnection getConnection() {
       return new ConnectionEcosMock();
    }
 

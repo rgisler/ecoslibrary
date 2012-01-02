@@ -19,7 +19,7 @@ package ch.gitik.ecos;
  * Abstrakte Basisklasse fuer Verbindung.
  * @author Roland Gisler
  */
-public abstract class Connection {
+public abstract class AbstractConnection {
 
    /**
     * Synchrone Kommunikation mit der Zentrale.
@@ -35,7 +35,7 @@ public abstract class Connection {
     *           Antwort die Ausgewertet wird.
     * @return true oder false.
     */
-   protected static boolean isResultOk(String answer) {
+   protected static boolean isResultOk(final String answer) {
       return (getResultCode(answer) == 0);
    }
 
@@ -45,7 +45,7 @@ public abstract class Connection {
     *           Antwort die Ausgewertet wird.
     * @return true oder false.
     */
-   protected static boolean isResultValid(String answer) {
+   protected static boolean isResultValid(final String answer) {
       return answer.contains("<REPLY") && answer.contains("<END");
    }
 
@@ -55,11 +55,11 @@ public abstract class Connection {
     *           Antwort die ausgewertet wird.
     * @return Resturncode.
     */
-   protected static int getResultCode(String answer) {
-      int posStart = answer.indexOf("<END ") + 5;
-      int posEnd = answer.indexOf(' ', posStart);
-      String resultCodeString = answer.substring(posStart, posEnd);
-      int resultCode = Integer.parseInt(resultCodeString);
+   protected static int getResultCode(final String answer) {
+      final int posStart = answer.indexOf("<END ") + 5;
+      final int posEnd = answer.indexOf(' ', posStart);
+      final String resultCodeString = answer.substring(posStart, posEnd);
+      final int resultCode = Integer.parseInt(resultCodeString);
       return resultCode;
    }
 
@@ -67,12 +67,14 @@ public abstract class Connection {
     * Liest ein Attribut aus einer Antwort.
     * @param answer
     *           Antwort die ausgewertet wird.
+    * @param attribute
+    *           Attribut das gesucht wird.
     * @return Resturncode.
     */
-   protected static String getAttribute(String answer, String attribute) {
-      int posStart = answer.indexOf(attribute + "[") + attribute.length() + 1;
-      int posEnd = answer.indexOf(']', posStart);
-      String value = answer.substring(posStart, posEnd);
+   protected static String getAttribute(final String answer, final String attribute) {
+      final int posStart = answer.indexOf(attribute + "[") + attribute.length() + 1;
+      final int posEnd = answer.indexOf(']', posStart);
+      final String value = answer.substring(posStart, posEnd);
       return value;
    }
 }

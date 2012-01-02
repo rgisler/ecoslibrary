@@ -19,17 +19,21 @@ package ch.gitik.ecos;
  * Simulation der Ecos fuer Testing.
  * @author Roland Gisler
  */
-public class ConnectionEcosMock extends Connection {
+public class ConnectionEcosMock extends AbstractConnection {
 
    @Override
-   public String request(String command) {
+   public final String request(final String command) {
       String result;
       if (command.contains("get(1,info)")) {
-         result = "<REPLY get(1, info)>\n1 ECoS\n1 ProtocolVersion[0.1]\n1 ApplicationVersion[1.0.1]\n1 HardwareVersion[1.3]\n<END 0 (OK)>";
+         result = "<REPLY get(1, info)>\n";
+         result += "1 ECoS\n";
+         result += "1 ProtocolVersion[0.1]\n";
+         result += "1 ApplicationVersion[1.0.1]\n";
+         result += "1 HardwareVersion[1.3]\n";
+         result += "<END 0 (OK)>";
       } else {
          result = "<REPLY " + command + ">\n<END 32 (UNKNOWN COMMAND)>";
       }
       return result;
    }
-
 }

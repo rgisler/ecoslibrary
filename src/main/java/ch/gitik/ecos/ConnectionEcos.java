@@ -16,15 +16,13 @@
 package ch.gitik.ecos;
 
 /**
- * 
  * @author Roland Gisler
  */
-public class ConnectionEcos extends Connection {
+public class ConnectionEcos extends AbstractConnection {
 
    @Override
-   public String request(String command) {
+   public final String request(final String command) {
       // TODO Auto-generated method stub
       return null;
    }
-
 }

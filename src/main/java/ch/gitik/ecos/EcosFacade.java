@@ -21,30 +21,28 @@ package ch.gitik.ecos;
  */
 public class EcosFacade implements EcosInterface {
 
-   private EcosHandler ecosHandler = null;
-   
+   final private EcosHandler ecosHandler;
+
    /**
     * Konstruktor.
     */
    public EcosFacade() {
       this.ecosHandler = new EcosHandler();
    }
-   
-   /**
+
+   /*
     * @see ch.gitik.ecos.EcosInterface#getName()
     */
    @Override
-   public String getName() {
+   public final String getName() {
       return this.ecosHandler.getName();
    }
 
-   /**
+   /*
     * @see ch.gitik.ecos.EcosInterface#getHardwareVersion()
     */
    @Override
-   public String getHardwareVersion() {
+   public final String getHardwareVersion() {
       return this.ecosHandler.getHardwareVersion();
    }
-
-
 }

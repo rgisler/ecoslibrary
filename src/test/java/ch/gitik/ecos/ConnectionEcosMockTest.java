@@ -29,19 +29,19 @@ public class ConnectionEcosMockTest {
 
    @Test
    public void testGetEcOS() {
-      Connection con = new ConnectionEcosMock();
+      AbstractConnection con = new ConnectionEcosMock();
       String answer = con.request("get(1,info)");
-      assertTrue(Connection.isResultValid(answer));
-      assertTrue(Connection.isResultOk(answer));
+      assertTrue(AbstractConnection.isResultValid(answer));
+      assertTrue(AbstractConnection.isResultOk(answer));
    }
 
    @Test
    public void testInvalidCommand() {
-      Connection con = new ConnectionEcosMock();
+      AbstractConnection con = new ConnectionEcosMock();
       String answer = con.request("get(1,unknown)");
-      assertTrue(Connection.isResultValid(answer));
-      assertFalse(Connection.isResultOk(answer));
-      assertEquals(32, Connection.getResultCode(answer));
+      assertTrue(AbstractConnection.isResultValid(answer));
+      assertFalse(AbstractConnection.isResultOk(answer));
+      assertEquals(32, AbstractConnection.getResultCode(answer));
    }
    
    

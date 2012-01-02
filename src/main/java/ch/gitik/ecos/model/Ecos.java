@@ -21,7 +21,7 @@ package ch.gitik.ecos.model;
  */
 public final class Ecos {
 
-   public static String ID = "1";
+   public static final String ID = "1";
    
    private final String name;
 
