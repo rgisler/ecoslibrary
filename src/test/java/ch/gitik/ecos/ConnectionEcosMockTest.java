@@ -31,16 +31,18 @@ public class ConnectionEcosMockTest {
    public void testGetEcOS() {
       Connection con = new ConnectionEcosMock();
       String answer = con.request("get(1,info)");
-      assertTrue(con.isResultValid(answer));
-      assertTrue(con.isResultOk(answer));
+      assertTrue(Connection.isResultValid(answer));
+      assertTrue(Connection.isResultOk(answer));
    }
 
    @Test
    public void testInvalidCommand() {
       Connection con = new ConnectionEcosMock();
       String answer = con.request("get(1,unknown)");
-      assertTrue(con.isResultValid(answer));
-      assertFalse(con.isResultOk(answer));
-      assertEquals(32, con.getResultCode(answer));
+      assertTrue(Connection.isResultValid(answer));
+      assertFalse(Connection.isResultOk(answer));
+      assertEquals(32, Connection.getResultCode(answer));
    }
+   
+   
 }

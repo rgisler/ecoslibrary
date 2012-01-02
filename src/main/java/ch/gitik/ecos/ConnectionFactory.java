@@ -19,6 +19,20 @@ package ch.gitik.ecos;
  * Factory fuer Connection-Objekte.
  * @author Roland Gisler
  */
-public class ConnectionFactory {
+public final class ConnectionFactory {
+
+   /**
+    * Privater Konstruktor. 
+    */
+   private ConnectionFactory() {
+   }
+
+   /**
+    * Statische Factory Methode.
+    * @return Liefert immer ein Mock.
+    */
+   public static Connection getConnection() {
+      return new ConnectionEcosMock();
+   }
 
 }

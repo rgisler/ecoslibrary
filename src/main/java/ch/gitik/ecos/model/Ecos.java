@@ -21,6 +21,8 @@ package ch.gitik.ecos.model;
  */
 public final class Ecos {
 
+   public static String ID = "1";
+   
    private final String name;
 
    private final String hardwareVersion;

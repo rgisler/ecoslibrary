@@ -21,7 +21,28 @@ package ch.gitik.ecos;
  */
 public class EcosHandler {
 
+   private Connection connection;
+
+   public EcosHandler() {
+      this.connection = ConnectionFactory.getConnection();
+   }
+
+   /**
+    * Liefert den Namen der Zentrale.
+    * @return Name der Zentrale.
+    */
    public String getName() {
-      return("not implemented.");
+      String answer = this.connection.request("get(1,info)");
+      //TODO: Extract Information
+      return ("ECoS");
+   }
+
+   /**
+    * Liefert die HW-Version der Zentrale.
+    * @return HW-Version der Zentrale.
+    */
+   public String getHardwareVersion() {
+      String answer = this.connection.request("get(1,info)");
+      return (Connection.getAttribute(answer, "HardwareVersion"));
    }
 }

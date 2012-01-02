@@ -23,6 +23,9 @@ public class EcosFacade implements EcosInterface {
 
    private EcosHandler ecosHandler = null;
    
+   /**
+    * Konstruktor.
+    */
    public EcosFacade() {
       this.ecosHandler = new EcosHandler();
    }
@@ -34,5 +37,14 @@ public class EcosFacade implements EcosInterface {
    public String getName() {
       return this.ecosHandler.getName();
    }
+
+   /**
+    * @see ch.gitik.ecos.EcosInterface#getHardwareVersion()
+    */
+   @Override
+   public String getHardwareVersion() {
+      return this.ecosHandler.getHardwareVersion();
+   }
+
 
 }

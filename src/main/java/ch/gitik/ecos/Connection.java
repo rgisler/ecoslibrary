@@ -35,7 +35,7 @@ public abstract class Connection {
     *           Antwort die Ausgewertet wird.
     * @return true oder false.
     */
-   protected boolean isResultOk(String answer) {
+   protected static boolean isResultOk(String answer) {
       return (getResultCode(answer) == 0);
    }
 
@@ -45,7 +45,7 @@ public abstract class Connection {
     *           Antwort die Ausgewertet wird.
     * @return true oder false.
     */
-   protected boolean isResultValid(String answer) {
+   protected static boolean isResultValid(String answer) {
       return answer.contains("<REPLY") && answer.contains("<END");
    }
 
@@ -55,11 +55,24 @@ public abstract class Connection {
     *           Antwort die ausgewertet wird.
     * @return Resturncode.
     */
-   protected int getResultCode(String answer) {
+   protected static int getResultCode(String answer) {
       int posStart = answer.indexOf("<END ") + 5;
       int posEnd = answer.indexOf(' ', posStart);
       String resultCodeString = answer.substring(posStart, posEnd);
       int resultCode = Integer.parseInt(resultCodeString);
       return resultCode;
+   }
+
+   /**
+    * Liest ein Attribut aus einer Antwort.
+    * @param answer
+    *           Antwort die ausgewertet wird.
+    * @return Resturncode.
+    */
+   protected static String getAttribute(String answer, String attribute) {
+      int posStart = answer.indexOf(attribute + "[") + attribute.length() + 1;
+      int posEnd = answer.indexOf(']', posStart);
+      String value = answer.substring(posStart, posEnd);
+      return value;
    }
 }

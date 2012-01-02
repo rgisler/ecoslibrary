@@ -26,4 +26,10 @@ public interface EcosInterface {
     * @return Name der Zentrale.
     */
    public String getName();
+
+   /**
+    * Liefert die HW-Version der Zentrale.
+    * @return HW-Version der Zentrale.
+    */
+   public String getHardwareVersion();
 }
