@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
- * $Id: AbstractBpmsTask.java 38 2007-02-12 12:50:46Z rog $
  */
 package ch.gitik.ecos;
 
