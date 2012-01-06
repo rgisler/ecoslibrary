@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * 
  * @author Roland Gisler
  * @version $Revision$
  */
@@ -31,10 +30,37 @@ public class EcosTest {
    @Test
    public void testConstructor() {
       Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
+      assertNotNull(test);
+   }
+
+   @Test
+   public void testGetName() {
+      Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertEquals("Name", test.getName());
+   }
+
+   @Test
+   public void testGetHWVersion() {
+      Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertEquals("1.0.0", test.getHardwareVersion());
+   }
+
+   @Test
+   public void testGetSWVersion() {
+      Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertEquals("2.0.0", test.getSoftwareversion());
+   }
+
+   @Test
+   public void testGetIsActive() {
+      Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertTrue(test.isActive());
+   }
+
+   @Test
+   public void testToString() {
+      Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
+      assertTrue(test.toString().contains("2.0.0"));
    }
 
 }

@@ -22,7 +22,7 @@ package ch.gitik.ecos.model;
 public final class Ecos {
 
    public static final String ID = "1";
-   
+
    private final String name;
 
    private final String hardwareVersion;
@@ -79,6 +79,14 @@ public final class Ecos {
     */
    public boolean isActive() {
       return active;
+   }
+
+   /*
+    * @see java.lang.Object#toString()
+    */
+   public String toString() {
+      return "ECoS - Name: " + this.name + ", HW-Version: " + this.hardwareVersion + " , SW-Version: "
+            + this.softwareversion + ", Aktiv: " + this.active;
    }
 
 }
