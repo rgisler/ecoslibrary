@@ -56,10 +56,15 @@ public abstract class AbstractConnection {
     * @return Resturncode.
     */
    protected static int getResultCode(final String answer) {
-      final int posStart = answer.indexOf("<END ") + 5;
-      final int posEnd = answer.indexOf(' ', posStart);
-      final String resultCodeString = answer.substring(posStart, posEnd);
-      final int resultCode = Integer.parseInt(resultCodeString);
+      int resultCode = 99999;
+      if ((answer != null) && (answer.length() > 0)) {
+         final int posStart = answer.indexOf("<END ") + 5;
+         final int posEnd = answer.indexOf(' ', posStart);
+         if ((posStart > 0) && (posEnd > posStart)) {
+            final String resultCodeString = answer.substring(posStart, posEnd);
+            resultCode = Integer.parseInt(resultCodeString);
+         }
+      }
       return resultCode;
    }
 

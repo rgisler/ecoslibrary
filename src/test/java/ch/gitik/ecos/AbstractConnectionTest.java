@@ -25,21 +25,43 @@ import org.junit.Test;
  * @author Roland Gisler
  * @version $Revision$
  */
-public class ConnectionTest {
+public class AbstractConnectionTest {
 
    @Test
    public void testIsResultOk() {
+      // TODO not implemented
       // fail("Not yet implemented");
    }
 
    @Test
    public void testIsResultValid() {
+      // TODO not implemented
       // fail("Not yet implemented");
    }
 
    @Test
-   public void testGetResultCode() {
-      // fail("Not yet implemented");
+   public void testGetResultCodeOk() {
+      assertEquals(0, AbstractConnection.getResultCode("<END 0 OK>"));
+   }
+
+   @Test
+   public void testGetResultCodeOk100() {
+      assertEquals(100, AbstractConnection.getResultCode("<END 100 Hundert>"));
+   }
+
+   @Test
+   public void testGetResultCodeMissing() {
+      assertEquals(99999, AbstractConnection.getResultCode("<FAILED>"));
+   }
+
+   @Test
+   public void testGetResultCodeEmptyString() {
+      assertEquals(99999, AbstractConnection.getResultCode(""));
+   }
+
+   @Test
+   public void testGetResultCodeNullString() {
+      assertEquals(99999, AbstractConnection.getResultCode(null));
    }
 
    @Test
