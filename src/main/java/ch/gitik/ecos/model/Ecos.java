@@ -81,7 +81,7 @@ public final class Ecos {
       return active;
    }
 
-   /*
+   /**
     * @see java.lang.Object#toString()
     */
    public String toString() {

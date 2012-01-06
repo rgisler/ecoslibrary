@@ -21,6 +21,8 @@ package ch.gitik.ecos;
  */
 public abstract class AbstractConnection {
 
+   public static final int ERROR_RESULT = 99999;
+
    /**
     * Synchrone Kommunikation mit der Zentrale.
     * @param command
@@ -56,7 +58,7 @@ public abstract class AbstractConnection {
     * @return Resturncode.
     */
    protected static int getResultCode(final String answer) {
-      int resultCode = 99999;
+      int resultCode = ERROR_RESULT;
       if ((answer != null) && (answer.length() > 0)) {
          final int posStart = answer.indexOf("<END ") + 5;
          final int posEnd = answer.indexOf(' ', posStart);

@@ -17,7 +17,7 @@
  */
 package ch.gitik.ecos;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -51,17 +51,17 @@ public class AbstractConnectionTest {
 
    @Test
    public void testGetResultCodeMissing() {
-      assertEquals(99999, AbstractConnection.getResultCode("<FAILED>"));
+      assertEquals(AbstractConnection.ERROR_RESULT, AbstractConnection.getResultCode("<FAILED>"));
    }
 
    @Test
    public void testGetResultCodeEmptyString() {
-      assertEquals(99999, AbstractConnection.getResultCode(""));
+      assertEquals(AbstractConnection.ERROR_RESULT, AbstractConnection.getResultCode(""));
    }
 
    @Test
    public void testGetResultCodeNullString() {
-      assertEquals(99999, AbstractConnection.getResultCode(null));
+      assertEquals(AbstractConnection.ERROR_RESULT, AbstractConnection.getResultCode(null));
    }
 
    @Test

@@ -21,7 +21,7 @@ package ch.gitik.ecos;
  */
 public class EcosHandler {
 
-   final private AbstractConnection connection;
+   private final AbstractConnection connection;
 
    /**
     * Konstruktor.

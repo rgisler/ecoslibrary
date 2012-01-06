@@ -21,7 +21,7 @@ package ch.gitik.ecos;
  */
 public class EcosFacade implements EcosInterface {
 
-   final private EcosHandler ecosHandler;
+   private final EcosHandler ecosHandler;
 
    /**
     * Konstruktor.
