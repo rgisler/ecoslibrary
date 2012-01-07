@@ -145,7 +145,7 @@
    <target name="instrument"
            depends="compile"
            description="instrument classes for coverage">
-      <delete dir="${coverage}" />
+      <delete dir="${coverage}" failonerror="false" />
       <mkdir dir="${coverage}" />
       <cobertura-instrument todir="${inst-classes}" datafile="${coverage.data}">
          <ignore regex="org.apache.log4j.*" />

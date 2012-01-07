@@ -17,6 +17,7 @@
  */
 package ch.gitik.ecos;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -34,9 +35,15 @@ public class AbstractConnectionTest {
    }
 
    @Test
-   public void testIsResultValid() {
-      // TODO not implemented
-      // fail("Not yet implemented");
+   public void testIsResultValidOk() {
+      assertTrue(AbstractConnection.isResultValid("<REPLY><END>"));
+   }
+
+   @Test
+   public void testIsResultValidNotOk() {
+      assertFalse(AbstractConnection.isResultValid("EMPTY"));
+      assertFalse(AbstractConnection.isResultValid("<REPLY>"));
+      assertFalse(AbstractConnection.isResultValid("<END>"));
    }
 
    @Test
