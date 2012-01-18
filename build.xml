@@ -38,6 +38,7 @@
    <property name="dist" location="${target}/dist" />
    <property name="generated" location="${target}/generated" />
    <property name="javadoc" location="${target}/javadoc" />
+   <property name="classycle" location="${target}/classycle" />
    <property name="junit" location="${target}/junit" />
    <property name="coverage" location="${target}/coverage" />
    <property name="checkstyle" location="${target}/checkstyle" />
@@ -55,8 +56,7 @@
    <!-- calculated properties -->
    <property name="distname" value="${proj.name}-${proj.version}" />
    <property name="coverage.data" value="${coverage}/cobertura.ser" />
-   <property name="checkstyle.config.file"
-             value="${libdev}/checkstyle/cfg/checkstyle_hslu.xml" />
+   <property name="checkstyle.config.file" value="${libdev}/checkstyle/cfg/checkstyle_hslu.xml" />
    <property name="pmd.config.file" value="${libdev}/pmd/cfg/pmd_hslu.xml" />
 
    <!-- define runtime libraries -->
@@ -84,8 +84,7 @@
       <echo message=" Building: ${ant.project.name}" level="info" />
       <echo message="==========================================" level="info" />
       <echo message=" Plattform    : ${os.name}" level="info" />
-      <echo message=" Java Version : ${java.version} ${java.vendor}"
-            level="info" />
+      <echo message=" Java Version : ${java.version} ${java.vendor}" level="info" />
       <echo message=" ANT Version  : ${ant.version}" level="info" />
       <echo message=" UserConfDir  : ${user.home}" level="info" />
    </target>
@@ -109,28 +108,15 @@
    <!-- ================================================================== -->
    <!-- Target: comile -->
    <!-- ================================================================== -->
-   <target name="compile"
-           depends="generate"
-           description="compile the source and tests ">
-      <javac destdir="${classes}"
-             source="${proj.java.version}"
-             target="${proj.java.version}"
-             debug="yes"
-             includeAntRuntime="false"
-             fork="true">
+   <target name="compile" depends="generate" description="compile the source and tests ">
+      <javac destdir="${classes}" source="${proj.java.version}" target="${proj.java.version}" debug="yes" includeAntRuntime="false" fork="true">
          <src path="${src.main}" />
          <src path="${generated}" />
          <classpath>
             <path refid="libset" />
          </classpath>
       </javac>
-      <javac srcdir="${src.test}"
-             destdir="${test-classes}"
-             source="${proj.java.version}"
-             target="${proj.java.version}"
-             debug="yes"
-             includeAntRuntime="false"
-             fork="true">
+      <javac srcdir="${src.test}" destdir="${test-classes}" source="${proj.java.version}" target="${proj.java.version}" debug="yes" includeAntRuntime="false" fork="true">
          <classpath>
             <pathelement path="${classes}" />
             <path refid="libset" />
@@ -142,9 +128,7 @@
    <!-- ================================================================== -->
    <!-- Target: instrument -->
    <!-- ================================================================== -->
-   <target name="instrument"
-           depends="compile"
-           description="instrument classes for coverage">
+   <target name="instrument" depends="compile" description="instrument classes for coverage">
       <delete dir="${coverage}" failonerror="false" />
       <mkdir dir="${coverage}" />
       <cobertura-instrument todir="${inst-classes}" datafile="${coverage.data}">
@@ -178,14 +162,8 @@
    <!-- ================================================================== -->
    <target name="test" depends="instrument" description="executes unittests">
       <mkdir dir="${junit}" />
-      <junit printsummary="on"
-             haltonfailure="false"
-             fork="true"
-             forkmode="once"
-             showoutput="true"
-             failureproperty="test.failed">
-         <sysproperty key="net.sourceforge.cobertura.datafile"
-                      file="${coverage.data}" />
+      <junit printsummary="on" haltonfailure="false" fork="true" forkmode="once" showoutput="true" failureproperty="test.failed">
+         <sysproperty key="net.sourceforge.cobertura.datafile" file="${coverage.data}" />
          <sysproperty key="proj.basedir" value="${basedir}" />
          <formatter usefile="false" type="brief" />
          <formatter type="xml" />
@@ -218,30 +196,39 @@
          <fileset dir="${src.main}" includes="**/*.java" />
          <formatter type="xml" toFile="${checkstyle}/checkstyle.xml" />
       </checkstyle>
-      <xslt in="${checkstyle}/checkstyle.xml"
-            out="${checkstyle}/index.html"
-            style="${libdev}/checkstyle/style/checkstyle-noframes-severity-sorted.xsl" />
+      <xslt in="${checkstyle}/checkstyle.xml" out="${checkstyle}/index.html" style="${libdev}/checkstyle/style/checkstyle-noframes-severity-sorted.xsl" />
+   </target>
+
+   <!-- ================================================================== -->
+   <!-- Target: classycle -->
+   <!-- ================================================================== -->
+   <target name="classycle" depends="jar" description="classycle report">
+      <taskdef name="classycleReport" classname="classycle.ant.ReportTask" classpathref="libsetdev" />
+      <mkdir dir="${classycle}" />
+      <classycleReport reportFile="${classycle}/classycle.xml">
+         <fileset dir="${target}/lib/">
+            <include name="${distname}.jar" />
+         </fileset>
+      </classycleReport>
+      <xslt in="${classycle}/classycle.xml" out="${classycle}/index.html" style="${libdev}/classycle/style/reportXMLtoHTML.xsl" />
+      <copy todir="${classycle}/images">
+         <fileset dir="${libdev}/classycle/images" includes="*.png" />
+      </copy>
    </target>
 
    <!-- ================================================================== -->
    <!-- Target: pmd -->
    <!-- ================================================================== -->
    <target name="pmd" depends="init" description="pmd report">
-      <taskdef name="pmd"
-               classname="net.sourceforge.pmd.ant.PMDTask"
-               classpathref="libsetdev" />
+      <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="libsetdev" />
       <mkdir dir="${pmd}" />
       <pmd rulesetfiles="${pmd.config.file}">
-         <formatter type="xml"
-                    toFile="${pmd}/pmd.xml"
-                    linkPrefix="../java2html/" />
+         <formatter type="xml" toFile="${pmd}/pmd.xml" linkPrefix="../java2html/" />
          <fileset dir="${src.main}">
             <include name="**/*.java" />
          </fileset>
       </pmd>
-      <xslt in="${pmd}/pmd.xml"
-            out="${pmd}/index.html"
-            style="${libdev}/pmd/style/pmd-report-per-class.xslt" />
+      <xslt in="${pmd}/pmd.xml" out="${pmd}/index.html" style="${libdev}/pmd/style/pmd-report-per-class.xslt" />
    </target>
 
    <!-- ================================================================== -->
@@ -249,21 +236,12 @@
    <!-- ================================================================== -->
    <target name="javadoc" depends="init" description="create JavaDoc">
       <mkdir dir="${javadoc}" />
-      <javadoc defaultexcludes="yes"
-               classpathref="libset"
-               private="true"
-               destdir="${javadoc}"
-               encoding="utf-8"
-               author="true"
-               version="true"
-               use="true"
-               windowtitle="${proj.name}"
-               overview="${src.main}/overview.html">
+      <javadoc defaultexcludes="yes" classpathref="libset" private="true" destdir="${javadoc}" encoding="utf-8" author="true" version="true" use="true" windowtitle="${proj.name}" overview="${src.main}/overview.html">
          <doctitle>
             <![CDATA[<h1>Dokumentation</h1>]]>
          </doctitle>
          <bottom>
-         <![CDATA[<i>Copyright 2012 Hochschule Luzern Technik & Architektur, Switzerland</i>]]>
+            <![CDATA[<i>Copyright 2012 Hochschule Luzern Technik & Architektur, Switzerland</i>]]>
          </bottom>
          <fileset dir="${src.main}">
             <include name="**/*.java" />
@@ -282,9 +260,7 @@
    <!-- Hinweis: Spezielle Reihenfolge, damit QS-Reports auch erstellt -->
    <!--          werden, wenn Fehler vorhanden sind (compile, test etc.) -->
    <!-- ================================================================== -->
-   <target name="dist"
-           depends="clean, report, jar, build"
-           description="create distributions">
+   <target name="dist" depends="clean, report, jar, build" description="create distributions">
       <mkdir dir="${target}/dist" />
       <zip destfile="${target}/dist/${distname}.zip">
          <zipfileset dir="${basedir}">
@@ -330,9 +306,7 @@
    <!-- ================================================================== -->
    <!-- Target: reports -->
    <!-- ================================================================== -->
-   <target name="report"
-           depends="checkstyle,pmd,javadoc"
-           description="complete reports">
+   <target name="report" depends="checkstyle,pmd,javadoc,classycle" description="complete reports">
    </target>
 
    <!-- ================================================================== -->
@@ -364,31 +338,8 @@
    <!-- ================================================================== -->
    <macrodef name="coverage.report">
       <sequential>
-         <cobertura-report datafile="${coverage.data}"
-                           format="html"
-                           destdir="${coverage}"
-                           srcdir="${src.main}" />
-         <cobertura-report datafile="${coverage.data}"
-                           format="xml"
-                           destdir="${coverage}"
-                           srcdir="${src.main}" />
-      </sequential>
-   </macrodef>
-
-   <!-- ================================================================== -->
-   <!-- Macro: corbagen - NUR ENTWURF!-->
-   <!-- ================================================================== -->
-   <macrodef name="corba.gen">
-      <sequential>
-         <java classname="org.jacorb.idl.parser" classpathref="libsetdev">
-            <arg value="-W" />
-            <arg value="2" />
-            <arg value="-i2jpackage" />
-            <arg value="Bank:ch.hslu.bank.corba" />
-            <arg value="-d" />
-            <arg path="${generated}" />
-            <arg path="${src.idl}/Bank.idl" />
-         </java>
+         <cobertura-report datafile="${coverage.data}" format="html" destdir="${coverage}" srcdir="${src.main}" />
+         <cobertura-report datafile="${coverage.data}" format="xml" destdir="${coverage}" srcdir="${src.main}" />
       </sequential>
    </macrodef>
 
