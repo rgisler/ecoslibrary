@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 -->
-<project name="ecoslibrary" default="build" basedir=".">
+<project name="ecoslibrary" default="build" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 
    <!-- Properties hierarchisch einlesen -->
    <property file="${basedir}/build.properties" />
@@ -33,7 +33,6 @@
    <!-- setting locations -->
    <property name="target" location="${basedir}/build" />
    <property name="classes" location="${target}/classes" />
-   <property name="inst-classes" location="${target}/classes-inst" />
    <property name="test-classes" location="${target}/classes-test" />
    <property name="dist" location="${target}/dist" />
    <property name="generated" location="${target}/generated" />
@@ -55,7 +54,7 @@
 
    <!-- calculated properties -->
    <property name="distname" value="${proj.name}-${proj.version}" />
-   <property name="coverage.data" value="${coverage}/cobertura.ser" />
+   <property name="coverage.data" value="${coverage}/jacoco.exec" />
    <property name="checkstyle.config.file" value="${libdev}/checkstyle/cfg/checkstyle_hslu.xml" />
    <property name="pmd.config.file" value="${libdev}/pmd/cfg/pmd_hslu.xml" />
 
@@ -73,8 +72,10 @@
       </fileset>
    </path>
 
-   <!-- Taskdefs -->
-   <taskdef classpathref="libsetdev" resource="tasks.properties" />
+   <!-- Taskdef for coverage -->
+   <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath path="${libdev}/jacoco/jacocoant.jar" />
+   </taskdef>
 
    <!--====================================================================-->
    <!-- info -->
@@ -95,7 +96,6 @@
    <target name="init" depends="info" description="create directory structure">
       <mkdir dir="${classes}" />
       <mkdir dir="${test-classes}" />
-      <mkdir dir="${inst-classes}" />
       <mkdir dir="${generated}" />
    </target>
 
@@ -126,20 +126,6 @@
    </target>
 
    <!-- ================================================================== -->
-   <!-- Target: instrument -->
-   <!-- ================================================================== -->
-   <target name="instrument" depends="compile" description="instrument classes for coverage">
-      <delete dir="${coverage}" failonerror="false" />
-      <mkdir dir="${coverage}" />
-      <cobertura-instrument todir="${inst-classes}" datafile="${coverage.data}">
-         <ignore regex="org.apache.log4j.*" />
-         <fileset dir="${classes}">
-            <include name="**/*.class" />
-         </fileset>
-      </cobertura-instrument>
-   </target>
-
-   <!-- ================================================================== -->
    <!-- Target: jar -->
    <!-- ================================================================== -->
    <target name="jar" depends="compile" description="create jar">
@@ -160,27 +146,29 @@
    <!-- ================================================================== -->
    <!-- Target: test -->
    <!-- ================================================================== -->
-   <target name="test" depends="instrument" description="executes unittests">
+   <target name="test" depends="jar" description="executes unittests">
       <mkdir dir="${junit}" />
-      <junit printsummary="on" haltonfailure="false" fork="true" forkmode="once" showoutput="true" failureproperty="test.failed">
-         <sysproperty key="net.sourceforge.cobertura.datafile" file="${coverage.data}" />
-         <sysproperty key="proj.basedir" value="${basedir}" />
-         <formatter usefile="false" type="brief" />
-         <formatter type="xml" />
-         <batchtest todir="${junit}">
-            <fileset dir="${src.test}">
-               <include name="**/*Test.java" />
-               <exclude name="**/AllTest.java" />
-            </fileset>
-         </batchtest>
-         <classpath>
-            <path location="${test-classes}" />
-            <path location="${inst-classes}" />
-            <path location="${classes}" />
-            <path refid="libset" />
-            <path refid="libsetdev" />
-         </classpath>
-      </junit>
+      <jacoco:coverage destfile="${coverage.data}">
+	      <junit printsummary="on" haltonfailure="false" fork="true" forkmode="once" showoutput="true" failureproperty="test.failed">
+	         <sysproperty key="net.sourceforge.cobertura.datafile" file="${coverage.data}" />
+	         <sysproperty key="proj.basedir" value="${basedir}" />
+	         <formatter usefile="false" type="brief" />
+	         <formatter type="xml" />
+	         <batchtest todir="${junit}">
+	            <fileset dir="${src.test}">
+	               <include name="**/*Test.java" />
+	               <exclude name="**/AllTest.java" />
+	            </fileset>
+	         </batchtest>
+	         <classpath>
+	            <path location="${test-classes}" />
+	            <path location="${inst-classes}" />
+	            <path location="${classes}" />
+	            <path refid="libset" />
+	            <path refid="libsetdev" />
+	         </classpath>
+	      </junit>
+      </jacoco:coverage>
       <junit.report />
       <coverage.report />
       <fail message="JUnit tests FAILED!" if="test.failed" />
@@ -338,9 +326,21 @@
    <!-- ================================================================== -->
    <macrodef name="coverage.report">
       <sequential>
-         <cobertura-report datafile="${coverage.data}" format="html" destdir="${coverage}" srcdir="${src.main}" />
-         <cobertura-report datafile="${coverage.data}" format="xml" destdir="${coverage}" srcdir="${src.main}" />
-      </sequential>
+         <jacoco:report>
+            <executiondata>
+               <file file="${coverage.data}" />
+            </executiondata>
+            <structure name="${distname}">
+               <classfiles>
+                  <fileset dir="${classes}" />
+               </classfiles>
+               <sourcefiles encoding="UTF-8">
+                  <fileset dir="${src.main}" />
+               </sourcefiles>
+            </structure>
+            <html destdir="${coverage}" footer="Powered by GiSLER iNFORMATiK"/>
+         </jacoco:report>
+   	  </sequential>
    </macrodef>
 
 </project>
