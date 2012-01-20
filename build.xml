@@ -148,27 +148,27 @@
    <!-- ================================================================== -->
    <target name="test" depends="jar" description="executes unittests">
       <mkdir dir="${junit}" />
-      <jacoco:coverage destfile="${coverage.data}">
-	      <junit printsummary="on" haltonfailure="false" fork="true" forkmode="once" showoutput="true" failureproperty="test.failed">
-	         <sysproperty key="net.sourceforge.cobertura.datafile" file="${coverage.data}" />
-	         <sysproperty key="proj.basedir" value="${basedir}" />
-	         <formatter usefile="false" type="brief" />
-	         <formatter type="xml" />
-	         <batchtest todir="${junit}">
-	            <fileset dir="${src.test}">
-	               <include name="**/*Test.java" />
-	               <exclude name="**/AllTest.java" />
-	            </fileset>
-	         </batchtest>
-	         <classpath>
-	            <path location="${test-classes}" />
-	            <path location="${inst-classes}" />
-	            <path location="${classes}" />
-	            <path refid="libset" />
-	            <path refid="libsetdev" />
-	         </classpath>
-	      </junit>
-      </jacoco:coverage>
+      <jacoco:agent property="test.vm.param" destfile="${coverage.data}" />
+      <junit printsummary="on" haltonfailure="false" fork="true" forkmode="once" showoutput="true" failureproperty="test.failed">
+         <jvmarg value="${test.vm.param}" />
+         <sysproperty key="net.sourceforge.cobertura.datafile" file="${coverage.data}" />
+         <sysproperty key="proj.basedir" value="${basedir}" />
+         <formatter usefile="false" type="brief" />
+         <formatter type="xml" />
+         <batchtest todir="${junit}">
+            <fileset dir="${src.test}">
+               <include name="**/*Test.java" />
+               <exclude name="**/AllTest.java" />
+            </fileset>
+         </batchtest>
+         <classpath>
+            <path location="${test-classes}" />
+            <path location="${inst-classes}" />
+            <path location="${classes}" />
+            <path refid="libset" />
+            <path refid="libsetdev" />
+         </classpath>
+      </junit>
       <junit.report />
       <coverage.report />
       <fail message="JUnit tests FAILED!" if="test.failed" />
@@ -338,7 +338,7 @@
                   <fileset dir="${src.main}" />
                </sourcefiles>
             </structure>
-            <html destdir="${coverage}" footer="Powered by GiSLER iNFORMATiK"/>
+            <html destdir="${coverage}" footer="Powered by GiSLER iNFORMATiK" />
          </jacoco:report>
    	  </sequential>
    </macrodef>
