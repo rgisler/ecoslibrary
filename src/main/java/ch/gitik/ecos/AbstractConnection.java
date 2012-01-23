@@ -21,6 +21,7 @@ package ch.gitik.ecos;
  */
 public abstract class AbstractConnection {
 
+   private static final String REPLY = "<REPLY";
    public static final int ERROR_RESULT = 99999;
 
    /**
@@ -48,7 +49,7 @@ public abstract class AbstractConnection {
     * @return true oder false.
     */
    protected static boolean isResultValid(final String answer) {
-      return answer.contains("<REPLY") && answer.contains("<END");
+      return answer.contains(REPLY) && answer.contains("<END");
    }
 
    /**
