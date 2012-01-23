@@ -339,6 +339,7 @@
                </sourcefiles>
             </structure>
             <html destdir="${coverage}" footer="Powered by GiSLER iNFORMATiK" />
+            <xml destfile="${coverage}/coverage.xml" />
          </jacoco:report>
    	  </sequential>
    </macrodef>
