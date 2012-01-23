@@ -81,7 +81,6 @@ public abstract class AbstractConnection {
    protected static String getAttribute(final String answer, final String attribute) {
       final int posStart = answer.indexOf(attribute + "[") + attribute.length() + 1;
       final int posEnd = answer.indexOf(']', posStart);
-      final String value = answer.substring(posStart, posEnd);
-      return value;
+      return answer.substring(posStart, posEnd);
    }
 }
