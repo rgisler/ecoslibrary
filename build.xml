@@ -50,7 +50,7 @@
    <property name="src.idl" location="${src}/main/idl" />
 
    <!-- setting general properties -->
-   <property name="proj.java.version" value="1.6" />
+   <property name="proj.java.version" value="1.7" />
 
    <!-- calculated properties -->
    <property name="distname" value="${proj.name}-${proj.version}" />
@@ -285,7 +285,7 @@
    <!-- ================================================================== -->
    <!-- Target: sonar -->
    <!-- ================================================================== -->
-   <target name="sonar" depends="checkstyle,pmd,test" description="sonar, only for use on buildserver">
+   <target name="sonar" depends="dist" description="sonar, only for use on buildserver">
       <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
          <classpath path="${libdev}/sonar/sonar-ant-task-1.3.jar" />
       </taskdef>
@@ -294,7 +294,7 @@
       <property name="sonar.sources" value="${basedir}/src/main/java" />
       <property name="sonar.tests" value="${basedir}/src/test/java" />
       <property name="sonar.binaries" value="${classes}"/>
-      <pathconvert property="sonar.libraries" refid="libsetdev" pathsep=","/>      
+      <pathconvert property="sonar.libraries" refid="libset" pathsep=","/>      
       <property name="sonar.verbose" value="false" />
 
       <!-- Integration bestehender Reports (not working yet)
