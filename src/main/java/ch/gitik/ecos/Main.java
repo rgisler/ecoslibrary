@@ -28,6 +28,7 @@ import java.net.UnknownHostException;
  */
 public final class Main {
 
+   private static final String IP_ADRESS = "192.168.0.120";
    private static final int PORT = 15471;
 
    /**
@@ -49,7 +50,7 @@ public final class Main {
       BufferedReader in = null;
 
       try {
-         echoSocket = new Socket("192.168.0.120", PORT);
+         echoSocket = new Socket(IP_ADRESS, PORT);
          out = new PrintWriter(echoSocket.getOutputStream(), true);
          in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
          out.println("request(1, view)");
