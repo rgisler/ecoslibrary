@@ -1,5 +1,6 @@
 <!--
- * Copyright 2012 Roland Gisler, GISLER iNFORMATiK, Switzerland.
+ * Copyright 2012 Roland Gisler
+ * Gisler iNFORMATiK, Luzern, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +15,8 @@
  * limitations under the License.
  */
 -->
-<project name="ecoslibrary" default="build" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+<project name="template" default="build" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 
-   <!-- Properties hierarchisch einlesen -->
    <property file="${basedir}/build.properties" />
    <property file="${basedir}/../build.properties" />
    <property file="${user.home}/build.properties" />
@@ -24,24 +24,14 @@
    <!-- project-properties (last defaults), set them in build.properties!) -->
    <property name="proj.name" value="template" />
    <property name="proj.version" value="0.0.0" />
-   <property name="proj.startclass" value="ch.hslu.demo.Demo" />
-   <property name="proj.autor" value="Vorname Nachname" />
+   <property name="proj.startclass" value="ch.gitik" />
+   <property name="proj.autor" value="Roland Gisler" />
 
    <!-- environment -->
    <property environment="env" />
 
-   <!-- setting locations -->
-   <property name="target" location="${basedir}/build" />
-   <property name="classes" location="${target}/classes" />
-   <property name="test-classes" location="${target}/classes-test" />
-   <property name="dist" location="${target}/dist" />
-   <property name="generated" location="${target}/generated" />
-   <property name="javadoc" location="${target}/javadoc" />
-   <property name="classycle" location="${target}/classycle" />
-   <property name="junit" location="${target}/junit" />
-   <property name="coverage" location="${target}/coverage" />
-   <property name="checkstyle" location="${target}/checkstyle" />
-   <property name="pmd" location="${target}/pmd" />
+   <!-- setting source location -->
+   <property name="bin" location="${basedir}/bin" />
    <property name="lib" location="${basedir}/lib" />
    <property name="libdev" location="${lib}/dev" />
    <property name="src" location="${basedir}/src" />
@@ -49,14 +39,27 @@
    <property name="src.test" location="${src}/test/java" />
    <property name="src.idl" location="${src}/main/idl" />
 
+   <!-- setting target locations -->
+   <property name="target" location="${basedir}/build" />
+   <property name="classes" location="${target}/classes" />
+   <property name="test-classes" location="${target}/classes-test" />
+   <property name="dist" location="${target}/dist" />
+   <property name="generated" location="${target}/generated" />
+   <property name="classycle" location="${target}/classycle" />
+   <property name="javadoc" location="${target}/javadoc" />
+   <property name="junit" location="${target}/junit" />
+   <property name="coverage" location="${target}/coverage" />
+   <property name="checkstyle" location="${target}/checkstyle" />
+   <property name="pmd" location="${target}/pmd" />
+
    <!-- setting general properties -->
    <property name="proj.java.version" value="1.7" />
 
    <!-- calculated properties -->
    <property name="distname" value="${proj.name}-${proj.version}" />
    <property name="coverage.data" value="${coverage}/jacoco.exec" />
-   <property name="checkstyle.config.file" value="${libdev}/checkstyle/cfg/checkstyle_hslu.xml" />
-   <property name="pmd.config.file" value="${libdev}/pmd/cfg/pmd_hslu.xml" />
+   <property name="checkstyle.config.file" value="${libdev}/checkstyle/cfg/checkstyle_gitik.xml" />
+   <property name="pmd.config.file" value="${libdev}/pmd/cfg/pmd_gitik.xml" />
 
    <!-- define runtime libraries -->
    <path id="libset">
@@ -72,7 +75,7 @@
       </fileset>
    </path>
 
-   <!-- Taskdef for JaCoCo -->
+   <!-- Taskdef for coverage -->
    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
       <classpath path="${libdev}/jacoco/jacocoant.jar" />
    </taskdef>
@@ -116,6 +119,12 @@
             <path refid="libset" />
          </classpath>
       </javac>
+      <copy todir="${classes}">
+         <fileset dir="${src.main}">
+            <include name="**/*.properties" />
+            <include name="**/*.xml" />
+         </fileset>
+      </copy>
       <javac srcdir="${src.test}" destdir="${test-classes}" source="${proj.java.version}" target="${proj.java.version}" debug="yes" includeAntRuntime="false" fork="true">
          <classpath>
             <pathelement path="${classes}" />
@@ -134,7 +143,7 @@
          <manifest>
             <attribute name="Implementation-Title" value="${proj.name}" />
             <attribute name="Implementation-Version" value="${proj.version}" />
-            <attribute name="Implementation-Vendor" value="HSLU" />
+            <attribute name="Implementation-Vendor" value="Gisler iNFORMATiK" />
             <attribute name="Implementation-User" value="${proj.autor}" />
             <attribute name="Built-By" value="${proj.autor}" />
             <attribute name="Sealed" value="false" />
@@ -149,9 +158,8 @@
    <target name="test" depends="jar" description="executes unittests">
       <mkdir dir="${junit}" />
       <jacoco:agent property="test.vm.param" destfile="${coverage.data}" />
-      <junit printsummary="on" haltonfailure="false" fork="true" forkmode="once" showoutput="true" failureproperty="test.failed">
+      <junit printsummary="off" haltonfailure="false" fork="true" forkmode="once" showoutput="true" failureproperty="test.failed">
          <jvmarg value="${test.vm.param}" />
-         <sysproperty key="net.sourceforge.cobertura.datafile" file="${coverage.data}" />
          <sysproperty key="proj.basedir" value="${basedir}" />
          <formatter usefile="false" type="brief" />
          <formatter type="xml" />
@@ -163,7 +171,6 @@
          </batchtest>
          <classpath>
             <path location="${test-classes}" />
-            <path location="${inst-classes}" />
             <path location="${classes}" />
             <path refid="libset" />
             <path refid="libsetdev" />
@@ -225,15 +232,15 @@
    <target name="javadoc" depends="init" description="create JavaDoc">
       <mkdir dir="${javadoc}" />
       <javadoc defaultexcludes="yes" classpathref="libset" private="true" destdir="${javadoc}" encoding="utf-8" author="true" version="true" use="true" windowtitle="${proj.name}" overview="${src.main}/overview.html">
-         <fileset dir="${src.main}">
-            <include name="**/*.java" />
-         </fileset>
          <doctitle>
             <![CDATA[<h1>Dokumentation</h1>]]>
          </doctitle>
-	     <bottom>
+         <bottom>
             <![CDATA[<i>Copyright 2012 Hochschule Luzern Technik & Architektur, Switzerland</i>]]>
          </bottom>
+         <fileset dir="${src.main}">
+            <include name="**/*.java" />
+         </fileset>
       </javadoc>
       <zip destfile="${javadoc}/javadoc.zip">
          <fileset dir="${javadoc}">
@@ -250,22 +257,33 @@
    <!-- ================================================================== -->
    <target name="dist" depends="clean, report, jar, build" description="create distributions">
       <mkdir dir="${target}/dist" />
-      <zip destfile="${target}/dist/${distname}.zip">
-         <zipfileset dir="${basedir}">
+      <zip destfile="${target}/dist/${distname}-bin.zip">
+         <zipfileset dir="${basedir}" prefix="${distname}">
             <include name="README" />
          </zipfileset>
-         <zipfileset dir="${target}/lib">
+         <zipfileset dir="${bin}" prefix="${distname}/bin">
+            <include name="*" />
+         </zipfileset>
+         <zipfileset dir="${target}/lib" prefix="${distname}/lib">
             <include name="*.jar" />
          </zipfileset>
-         <zipfileset dir="${lib}" prefix="lib">
+         <zipfileset dir="${lib}" prefix="${distname}/lib">
             <include name="*.jar" />
+         </zipfileset>
+         <zipfileset dir="${javadoc}" prefix="${distname}/doc">
+            <include name="**/*.*" />
+            <exclude name="javadoc.zip" />
          </zipfileset>
       </zip>
       <zip destfile="${target}/dist/${distname}-src.zip">
          <zipfileset dir="${basedir}" prefix="${proj.name}">
             <include name="**/*" />
             <exclude name="build/**" />
+            <exclude name="nbproject/**" />
+            <exclude name="target/**" />
             <exclude name=".*/**" />
+            <exclude name="pom.xml" />
+            <exclude name="*.jenkins" />
          </zipfileset>
       </zip>
    </target>
@@ -283,35 +301,11 @@
    </target>
 
    <!-- ================================================================== -->
-   <!-- Target: sonar -->
-   <!-- ================================================================== -->
-   <target name="sonar" depends="dist" description="sonar, only for use on buildserver">
-      <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
-         <classpath path="${libdev}/sonar/sonar-ant-task-1.3.jar" />
-      </taskdef>
-      <property name="sonar.projectName" value="${proj.name}" />
-      <property name="sonar.java.source" value="${proj.java.version}" />
-      <property name="sonar.sources" value="${basedir}/src/main/java" />
-      <property name="sonar.tests" value="${basedir}/src/test/java" />
-      <property name="sonar.binaries" value="${classes}"/>
-      <pathconvert property="sonar.libraries" refid="libset" pathsep=","/>      
-      <property name="sonar.verbose" value="false" />
-
-      <!-- Integration bestehender Reports (not working yet)
-      <property name="sonar.dynamicAnalysis" value="reuseReports" />
-      <property name="sonar.surefire.reportsPath" value="build/junit" />
-      <property name="sonar.checkstyle.reportsPath" value="build/checkstyle/checkstyle.xml" />
-      <property name="sonar.pmd.reportsPath" value="build/pmd/pmd.xml" />
-      -->
-      
-      <sonar:sonar key="ch.gitik.${proj.name}:${proj.name}" version="${proj.version}" xmlns:sonar="antlib:org.sonar.ant" />
-   </target>
-
-   <!-- ================================================================== -->
    <!-- Target: clean -->
    <!-- ================================================================== -->
    <target name="clean" description="clean up">
       <delete includeemptydirs="true" quiet="true">
+         <fileset dir="${basedir}/.sonar" />
          <fileset dir="${target}" excludes="eclipse/**/*" />
       </delete>
    </target>
@@ -328,6 +322,26 @@
    <target name="build" depends="jar, test" description="complete build">
    </target>
 
+   <!-- ================================================================== -->
+   <!-- Target: sonar -->
+   <!-- ================================================================== -->
+   <target name="sonar" depends="dist" description="sonar, only for use on buildserver">
+      <property name="sonar.dynamicAnalysis" value="reuseReports" />
+      <property name="sonar.surefire.reportsPath" value="${junit}" />
+      <property name="sonar.jacoco.reportPath" value="${coverage}/jacoco.exec" />
+      <property name="sonar.projectName" value="${proj.name}" />
+      <property name="sonar.java.source" value="${proj.java.version}" />
+      <property name="sonar.sources" value="${src.main}" />
+      <property name="sonar.tests" value="${src.test}" />
+      <property name="sonar.binaries" value="${classes}" />
+      <pathconvert property="sonar.libraries" refid="libsetdev" pathsep="," />
+      <property name="sonar.verbose" value="false" />
+      <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+         <classpath path="${libdev}/sonar/sonar-ant-task-1.3.jar" />
+      </taskdef>
+      <sonar:sonar key="ch.gitik.:${proj.name}" version="${proj.version}" xmlns:sonar="antlib:org.sonar.ant" />
+   </target>
+
    <!-- ****************************************************************** -->
    <!-- * MACROS  -->
    <!-- ****************************************************************** -->
@@ -339,8 +353,7 @@
       <sequential>
          <junitreport todir="${junit}">
             <fileset dir="${junit}">
-               <include name="*.xml" />
-               <exclude name="TESTS-TestSuites.xml" />
+               <include name="TEST-*.xml" />
             </fileset>
             <report format="frames" todir="${junit}" />
          </junitreport>
@@ -364,12 +377,9 @@
                   <fileset dir="${src.main}" />
                </sourcefiles>
             </structure>
-            <html destdir="${coverage}" footer="Powered by GiSLER iNFORMATiK" />
+            <html destdir="${coverage}" footer="Gisler iNFORMATiK" />
             <xml destfile="${coverage}/coverage.xml" />
-            <csv destfile="${coverage}/coverage.txt" />
          </jacoco:report>
-         <echo file="${coverage}/coverage.txt" />
       </sequential>
    </macrodef>
-
 </project>
