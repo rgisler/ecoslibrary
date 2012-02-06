@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 -->
-<project name="template" default="build" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+<project name="ecoslibrary" default="build" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 
    <property file="${basedir}/build.properties" />
    <property file="${basedir}/../build.properties" />
@@ -380,6 +380,10 @@
             <html destdir="${coverage}" footer="Gisler iNFORMATiK" />
             <xml destfile="${coverage}/coverage.xml" />
          </jacoco:report>
+
+         <taskdef name="QSReporter" classname="ch.gitik.qsreporter.QSReporterTask" classpathref="libsetdev" />
+         <QSReporter jacocoxml="${coverage}/coverage.xml" />
+
       </sequential>
    </macrodef>
 </project>
