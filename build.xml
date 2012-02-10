@@ -80,6 +80,9 @@
       <classpath path="${libdev}/jacoco/jacocoant.jar" />
    </taskdef>
 
+   <!-- Taskdef for QSReporter -->
+   <taskdef name="qsreporter" classname="ch.gitik.qsreporter.QSReporterTask" classpathref="libsetdev" />
+
    <!--====================================================================-->
    <!-- info -->
    <!--====================================================================-->
@@ -192,6 +195,7 @@
          <formatter type="xml" toFile="${checkstyle}/checkstyle.xml" />
       </checkstyle>
       <xslt in="${checkstyle}/checkstyle.xml" out="${checkstyle}/index.html" style="${libdev}/checkstyle/style/checkstyle-noframes-severity-sorted.xsl" />
+      <qsreporter checkstylexml="${checkstyle}/checkstyle.xml" />
    </target>
 
    <!-- ================================================================== -->
@@ -224,6 +228,7 @@
          </fileset>
       </pmd>
       <xslt in="${pmd}/pmd.xml" out="${pmd}/index.html" style="${libdev}/pmd/style/pmd-report-per-class.xslt" />
+      <qsreporter pmdxml="${pmd}/pmd.xml" />
    </target>
 
    <!-- ================================================================== -->
@@ -380,10 +385,7 @@
             <html destdir="${coverage}" footer="Gisler iNFORMATiK" />
             <xml destfile="${coverage}/coverage.xml" />
          </jacoco:report>
-
-         <taskdef name="QSReporter" classname="ch.gitik.qsreporter.QSReporterTask" classpathref="libsetdev" />
-         <QSReporter jacocoxml="${coverage}/coverage.xml" />
-
+         <qsreporter jacocoxml="${coverage}/coverage.xml" />
       </sequential>
    </macrodef>
 </project>
