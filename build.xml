@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 -->
-<project name="ecoslibrary" default="build" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+<project name="ecoslibrary" default="dist" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 
    <property file="${basedir}/build.properties" />
    <property file="${basedir}/../build.properties" />
