@@ -52,6 +52,11 @@ public class AbstractConnectionTest {
    }
 
    @Test
+   public void testGetResultCodeInvalid() {
+      assertEquals(99999, AbstractConnection.getResultCode("0 invalid>"));
+   }
+
+   @Test
    public void testGetResultCodeOk100() {
       assertEquals(100, AbstractConnection.getResultCode("<END 100 Hundert>"));
    }
