@@ -53,7 +53,7 @@
    <property name="pmd" location="${target}/pmd" />
 
    <!-- setting general properties -->
-   <property name="proj.java.version" value="1.7" />
+   <property name="proj.java.version" value="1.6" />
 
    <!-- calculated properties -->
    <property name="distname" value="${proj.name}-${proj.version}" />
