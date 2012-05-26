@@ -59,7 +59,7 @@
    <property name="distname" value="${proj.name}-${proj.version}" />
    <property name="coverage.data" value="${coverage}/jacoco.exec" />
    <property name="checkstyle.config.file" value="${libdev}/checkstyle/cfg/checkstyle_gitik.xml" />
-   <property name="pmd.config.file" value="${libdev}/pmd/cfg/pmd_gitik.xml" />
+   <property name="pmd.config.file" value="pmd_gitik.xml" />
 
    <!-- define runtime libraries -->
    <path id="libset">
@@ -73,6 +73,7 @@
       <fileset dir="${libdev}">
          <include name="**/*.jar" />
       </fileset>
+      <pathelement path="${libdev}/pmd/cfg"/>
    </path>
 
    <!-- Taskdef for coverage -->
@@ -213,6 +214,7 @@
       <copy todir="${classycle}/images">
          <fileset dir="${libdev}/classycle/images" includes="*.png" />
       </copy>
+      <qsreporter classyclexml="${classycle}/classycle.xml" />
    </target>
 
    <!-- ================================================================== -->
@@ -222,7 +224,7 @@
       <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="libsetdev" />
       <mkdir dir="${pmd}" />
       <pmd rulesetfiles="${pmd.config.file}">
-         <formatter type="xml" toFile="${pmd}/pmd.xml" linkPrefix="../java2html/" />
+         <formatter type="xml" toFile="${pmd}/pmd.xml" />
          <fileset dir="${src.main}">
             <include name="**/*.java" />
          </fileset>
@@ -241,7 +243,7 @@
             <![CDATA[<h1>Dokumentation</h1>]]>
          </doctitle>
          <bottom>
-            <![CDATA[<i>Copyright 2012 Hochschule Luzern Technik & Architektur, Switzerland</i>]]>
+            <![CDATA[<i>Copyright 2012 GiSLER iNFORMATiK, Luzern, Switzerland</i>]]>
          </bottom>
          <fileset dir="${src.main}">
             <include name="**/*.java" />
@@ -344,7 +346,7 @@
       <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
          <classpath path="${libdev}/sonar/sonar-ant-task-1.3.jar" />
       </taskdef>
-      <sonar:sonar key="ch.gitik.:${proj.name}" version="${proj.version}" xmlns:sonar="antlib:org.sonar.ant" />
+      <sonar:sonar key="ch.gitik:${proj.name}" version="${proj.version}" xmlns:sonar="antlib:org.sonar.ant" />
    </target>
 
    <!-- ****************************************************************** -->
