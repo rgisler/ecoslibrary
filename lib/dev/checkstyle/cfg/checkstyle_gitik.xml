@@ -55,8 +55,8 @@
    </module>
    <module name="TreeWalker">
 
-        <!-- Checks for Javadoc comments.                     -->
-        <!-- See http://checkstyle.sf.net/config_javadoc.html -->
+      <!-- Checks for Javadoc comments.                     -->
+      <!-- See http://checkstyle.sf.net/config_javadoc.html -->
       <module name="JavadocMethod" />
       <module name="JavadocType" />
       <module name="JavadocVariable">
@@ -64,8 +64,8 @@
       </module>
       <module name="JavadocStyle" />
 
-        <!-- Checks for Naming Conventions.                  -->
-        <!-- See http://checkstyle.sf.net/config_naming.html -->
+      <!-- Checks for Naming Conventions.                  -->
+      <!-- See http://checkstyle.sf.net/config_naming.html -->
       <module name="ConstantName" />
       <module name="LocalFinalVariableName" />
       <module name="LocalVariableName" />
@@ -76,23 +76,23 @@
       <module name="StaticVariableName" />
       <module name="TypeName" />
 
-        <!-- Checks for imports                              -->
-        <!-- See http://checkstyle.sf.net/config_import.html -->
+      <!-- Checks for imports                              -->
+      <!-- See http://checkstyle.sf.net/config_import.html -->
       <module name="AvoidStarImport" />
       <module name="IllegalImport" /> <!-- defaults to sun.* packages -->
       <module name="RedundantImport" />
       <module name="UnusedImports" />
 
-        <!-- Checks for Size Violations.                    -->
-        <!-- See http://checkstyle.sf.net/config_sizes.html -->
+      <!-- Checks for Size Violations.                    -->
+      <!-- See http://checkstyle.sf.net/config_sizes.html -->
       <module name="LineLength">
-          <property name="max" value="120"/>
+         <property name="max" value="120" />
       </module>
       <module name="MethodLength" />
       <module name="ParameterNumber" />
 
-        <!-- Checks for whitespace                               -->
-        <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+      <!-- Checks for whitespace                               -->
+      <!-- See http://checkstyle.sf.net/config_whitespace.html -->
       <module name="EmptyForIteratorPad" />
       <module name="GenericWhitespace" />
       <module name="MethodParamPad" />
@@ -104,26 +104,28 @@
       <module name="WhitespaceAfter" />
       <module name="WhitespaceAround" />
 
-        <!-- Modifier Checks                                    -->
-        <!-- See http://checkstyle.sf.net/config_modifiers.html -->
+      <!-- Modifier Checks                                    -->
+      <!-- See http://checkstyle.sf.net/config_modifiers.html -->
       <module name="ModifierOrder" />
       <module name="RedundantModifier" />
 
-        <!-- Checks for blocks. You know, those {}'s         -->
-        <!-- See http://checkstyle.sf.net/config_blocks.html -->
+      <!-- Checks for blocks. You know, those {}'s         -->
+      <!-- See http://checkstyle.sf.net/config_blocks.html -->
       <module name="AvoidNestedBlocks" />
       <module name="EmptyBlock" />
       <module name="LeftCurly" />
       <module name="NeedBraces" />
       <module name="RightCurly" />
 
-        <!-- Checks for common coding problems               -->
-        <!-- See http://checkstyle.sf.net/config_coding.html -->
+      <!-- Checks for common coding problems               -->
+      <!-- See http://checkstyle.sf.net/config_coding.html -->
       <module name="AvoidInlineConditionals" />
-      <module name="DoubleCheckedLocking" />
       <module name="EmptyStatement" />
       <module name="EqualsHashCode" />
-      <module name="HiddenField" />
+      <module name="HiddenField">
+         <property name="ignoreConstructorParameter" value="true" />
+         <property name="ignoreSetter" value="true" />
+      </module>
       <module name="IllegalInstantiation" />
       <module name="InnerAssignment" />
       <module name="MagicNumber" />
@@ -132,16 +134,16 @@
       <module name="SimplifyBooleanExpression" />
       <module name="SimplifyBooleanReturn" />
 
-        <!-- Checks for class design                         -->
-        <!-- See http://checkstyle.sf.net/config_design.html -->
+      <!-- Checks for class design                         -->
+      <!-- See http://checkstyle.sf.net/config_design.html -->
       <module name="DesignForExtension" />
       <module name="FinalClass" />
       <module name="HideUtilityClassConstructor" />
       <module name="InterfaceIsType" />
       <module name="VisibilityModifier" />
 
-        <!-- Miscellaneous other checks.                   -->
-        <!-- See http://checkstyle.sf.net/config_misc.html -->
+      <!-- Miscellaneous other checks.                   -->
+      <!-- See http://checkstyle.sf.net/config_misc.html -->
       <module name="ArrayTypeStyle" />
       <module name="FinalParameters" />
       <module name="TodoComment" />

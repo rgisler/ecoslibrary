@@ -1,26 +1,20 @@
 <?xml version="1.0"?>
-
-<ruleset name="Clone Implementation Rules"
-    xmlns="http://pmd.sf.net/ruleset/1.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
-    xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
-  <description>
+<ruleset name="Clone Implementation" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+   <description>
 The Clone Implementation ruleset contains a collection of rules that find questionable usages of the clone() method.
   </description>
-
-    <rule name="ProperCloneImplementation"
-    		since="1.4"
-         message="Object clone() should be implemented with super.clone()"
-         class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/clone.html#ProperCloneImplementation">
-     <description>
+   <rule name="ProperCloneImplementation" language="java" since="1.4"
+      message="Object clone() should be implemented with super.clone()" class="net.sourceforge.pmd.lang.rule.XPathRule"
+      externalInfoUrl="http://pmd.sourceforge.net/pmd-5.0.2/rules/java/clone.html#ProperCloneImplementation">
+      <description>
 Object clone() should be implemented with super.clone().
      </description>
-     <priority>2</priority>
-     <properties>
+      <priority>2</priority>
+      <properties>
          <property name="xpath">
-             <value>
+            <value>
                  <![CDATA[
 //MethodDeclarator
 [@Image = 'clone']
@@ -34,8 +28,8 @@ ClassOrInterfaceDeclaration[1]/@Image)
                 ]]>
              </value>
          </property>
-     </properties>
-     <example>
+      </properties>
+      <example>
  <![CDATA[
 class Foo{
     public Object clone(){
@@ -44,20 +38,18 @@ class Foo{
 }
 ]]>
      </example>
-     </rule>
-
-    <rule name="CloneThrowsCloneNotSupportedException"
-    		since="1.9"
-         message="clone() method should throw CloneNotSupportedException"
-         class="net.sourceforge.pmd.rules.XPathRule"
-         externalInfoUrl="http://pmd.sourceforge.net/rules/clone.html#CloneThrowsCloneNotSupportedException">
-         <description>
+   </rule>
+   <rule name="CloneThrowsCloneNotSupportedException" language="java"
+      since="1.9" message="clone() method should throw CloneNotSupportedException"
+      class="net.sourceforge.pmd.lang.rule.XPathRule"
+      externalInfoUrl="http://pmd.sourceforge.net/pmd-5.0.2/rules/java/clone.html#CloneThrowsCloneNotSupportedException">
+      <description>
 The method clone() should throw a CloneNotSupportedException.
          </description>
-         <priority>3</priority>
-         <properties>
-             <property name="xpath">
-                 <value>
+      <priority>3</priority>
+      <properties>
+         <property name="xpath">
+            <value>
                      <![CDATA[
 //MethodDeclaration
 [
@@ -71,9 +63,9 @@ and count(NameList/Name[contains
 ]
                      ]]>
                  </value>
-             </property>
-         </properties>
-         <example>
+         </property>
+      </properties>
+      <example>
              <![CDATA[
  public class MyClass implements Cloneable{
      public Object clone() { // will cause an error
@@ -83,20 +75,18 @@ and count(NameList/Name[contains
  }
     ]]>
          </example>
-     </rule>
-
-    <rule name="CloneMethodMustImplementCloneable"
-    	  since="1.9"
-        message="clone() method should be implemented only if implementing Cloneable interface"
-        class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/clone.html#CloneMethodMustImplementCloneable">
-        <description>
+   </rule>
+   <rule name="CloneMethodMustImplementCloneable" language="java" since="1.9"
+      message="clone() method should be implemented only if implementing Cloneable interface"
+      class="net.sourceforge.pmd.lang.rule.XPathRule"
+      externalInfoUrl="http://pmd.sourceforge.net/pmd-5.0.2/rules/java/clone.html#CloneMethodMustImplementCloneable">
+      <description>
 The method clone() should only be implemented if the class implements the Cloneable interface with the exception of a final method that only throws CloneNotSupportedException.
         </description>
-        <priority>3</priority>
-        <properties>
-            <property name="xpath">
-                <value>
+      <priority>3</priority>
+      <properties>
+         <property name="xpath">
+            <value>
                     <![CDATA[
 //ClassOrInterfaceDeclaration
 [not(./ImplementsList/ClassOrInterfaceType
@@ -113,9 +103,9 @@ and Block[count(BlockStatement)=1]
 
                     ]]>
                 </value>
-            </property>
-        </properties>
-        <example>
+         </property>
+      </properties>
+      <example>
             <![CDATA[
 public class MyClass {
  public Object clone() throws CloneNotSupportedException {
@@ -124,7 +114,5 @@ public class MyClass {
 }
    ]]>
         </example>
-    </rule>
-
+   </rule>
 </ruleset>
-
