@@ -77,11 +77,8 @@ public final class Main {
          echoSocket.close();
       } catch (UnknownHostException e) {
          logger.error("Don't know about host.", e);
-         System.exit(1);
       } catch (IOException e) {
          logger.error("Couldn't get I/O to host.", e);
-         System.exit(1);
       }
-
    }
 }
