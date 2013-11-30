@@ -20,31 +20,33 @@
    </prerequisites>
 
    <scm>
-      <connection>scm:git:https://rgisler@bitbucket.org/rgisler/mavendemo.git</connection>
-      <developerConnection>scm:git:ssh://git@bitbucket.org/rgisler/mavendemo.git</developerConnection>
-      <url>https://bitbucket.org/rgisler/mavendemo</url>
+      <connection>scm:git:https://github.com/rgisler/ecoslibrary.git</connection>
+      <developerConnection>scm:git:ssh://git@github.com:rgisler/ecoslibrary.git</developerConnection>
+      <url>https://github.com/rgisler/ecoslibrary</url>
    </scm>
 
    <issueManagement>
-      <system>BitBucket Tickets</system>
-      <url>https://bitbucket.org/dashboard/issues</url>
+      <system>GitHub Tickets</system>
+      <url>https://github.com/rgisler/ecoslibrary/issues</url>
    </issueManagement>
 
    <ciManagement>
       <system>TeamCity</system>
-      <url>http://localhost:8111/project.html?projectId=Gitik_Maven_MavenDemo&amp;tab=projectOverview</url>
+      <url>http://gitikdev.cloudapp.net:8111/project.html?projectId=Gitik_Maven_EcosLibrary</url>
    </ciManagement>
 
    <dependencies>
       <dependency>
-         <groupId>junit</groupId>
-         <artifactId>junit</artifactId>
-         <scope>test</scope>
-      </dependency>
-      <dependency>
          <groupId>log4j</groupId>
          <artifactId>log4j</artifactId>
          <version>1.2.17</version>
+         <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <scope>test</scope>
       </dependency>
    </dependencies>
 </project>

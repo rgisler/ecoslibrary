@@ -21,8 +21,9 @@ package ch.gitik.ecos;
  */
 public abstract class AbstractConnection {
 
-   private static final String REPLY = "<REPLY";
    public static final int ERROR_RESULT = 99999;
+   
+   private static final String REPLY = "<REPLY";
 
    /**
     * Synchrone Kommunikation mit der Zentrale.
