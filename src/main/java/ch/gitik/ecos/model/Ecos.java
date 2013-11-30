@@ -84,6 +84,7 @@ public final class Ecos {
    /**
     * @see java.lang.Object#toString()
     */
+   @Override
    public String toString() {
       return "ECoS - Name: " + this.name + ", HW-Version: " + this.hardwareVersion + " , SW-Version: "
             + this.softwareversion + ", Aktiv: " + this.active;
