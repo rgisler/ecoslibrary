@@ -17,16 +17,22 @@
  */
 package ch.gitik.ecos.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 /**
+ * Testfälle für {@link ch.gitik.ecos.model.Ecos}.
  * @author Roland Gisler
  * @version $Revision$
  */
 public class EcosTest {
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.model.Ecos#Ecos(String, String, String, boolean)}.
+    */
    @Test
    public void testConstructor() {
       Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);

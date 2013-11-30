@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import org.apache.log4j.Logger;
+
 /**
  * Test-Main Klasse.
  * @author Roland Gisler
@@ -30,6 +32,8 @@ public final class Main {
 
    private static final String IP_ADRESS = "192.168.0.120";
    private static final int PORT = 15471;
+
+   private static Logger logger = Logger.getLogger(Main.class.getName());
 
    /**
     * Konstruktur.
@@ -45,11 +49,15 @@ public final class Main {
     */
    public static void main(final String[] args) throws IOException {
 
+      
+      
+      
       Socket echoSocket = null;
       PrintWriter out = null;
       BufferedReader in = null;
 
       try {
+         logger.info("Start des Programmes.");
          echoSocket = new Socket(IP_ADRESS, PORT);
          out = new PrintWriter(echoSocket.getOutputStream(), true);
          in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
@@ -61,17 +69,19 @@ public final class Main {
          out.flush();
          out.println("queryObjects(11, name1, name2, name3, addr)");
          out.flush();
+         String input = in.readLine();
+         while (input != null) {
+            logger.info(input);
+            input = in.readLine();
+         }
          echoSocket.close();
       } catch (UnknownHostException e) {
-         System.err.println("Don't know about host.");
+         logger.error("Don't know about host.", e);
          System.exit(1);
       } catch (IOException e) {
-         System.err.println("Couldn't get I/O for " + "the connection to host.");
+         logger.error("Couldn't get I/O to host.", e);
          System.exit(1);
       }
 
-      while (true) {
-         System.out.println(in.readLine());
-      }
    }
 }
