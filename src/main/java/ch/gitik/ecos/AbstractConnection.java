@@ -21,6 +21,9 @@ package ch.gitik.ecos;
  */
 public abstract class AbstractConnection {
 
+   /**
+    * Genereller ErrorCode der Ecos.
+    */
    public static final int ERROR_RESULT = 99999;
    
    private static final String REPLY = "<REPLY";
@@ -40,7 +43,7 @@ public abstract class AbstractConnection {
     * @return true oder false.
     */
    protected static boolean isResultOk(final String answer) {
-      return (getResultCode(answer) == 0);
+      return getResultCode(answer) == 0;
    }
 
    /**

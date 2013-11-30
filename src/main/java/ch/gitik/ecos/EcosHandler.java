@@ -37,7 +37,7 @@ public class EcosHandler {
    public final String getName() {
       final String answer = this.connection.request("get(1,info)");
       // TODO Extract Information
-      return ("ECoS");
+      return "ECoS";
    }
 
    /**
@@ -46,6 +46,6 @@ public class EcosHandler {
     */
    public final String getHardwareVersion() {
       final String answer = this.connection.request("get(1,info)");
-      return (AbstractConnection.getAttribute(answer, "HardwareVersion"));
+      return AbstractConnection.getAttribute(answer, "HardwareVersion");
    }
 }
