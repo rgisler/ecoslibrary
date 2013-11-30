@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>ch.gitik</groupId>
+      <artifactId>masterpom</artifactId>
+      <version>1.2.2-SNAPSHOT</version>
+   </parent>
+
+   <artifactId>ecos</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+   <packaging>jar</packaging>
+   <name>Ecos Library</name>
+   <description>Library für Zugriff auf Ecos Zentrale</description>
+
+   <url>http://www.gisler-informatik.ch</url>
+
+   <prerequisites>
+      <maven>2.2.1</maven>
+   </prerequisites>
+
+   <scm>
+      <connection>scm:git:https://rgisler@bitbucket.org/rgisler/mavendemo.git</connection>
+      <developerConnection>scm:git:ssh://git@bitbucket.org/rgisler/mavendemo.git</developerConnection>
+      <url>https://bitbucket.org/rgisler/mavendemo</url>
+   </scm>
+
+   <issueManagement>
+      <system>BitBucket Tickets</system>
+      <url>https://bitbucket.org/dashboard/issues</url>
+   </issueManagement>
+
+   <ciManagement>
+      <system>TeamCity</system>
+      <url>http://localhost:8111/project.html?projectId=Gitik_Maven_MavenDemo&amp;tab=projectOverview</url>
+   </ciManagement>
+
+   <dependencies>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId>
+         <version>1.2.17</version>
+      </dependency>
+   </dependencies>
+</project>

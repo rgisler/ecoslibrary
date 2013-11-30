@@ -61,6 +61,7 @@ public final class Main {
          out.flush();
          out.println("queryObjects(11, name1, name2, name3, addr)");
          out.flush();
+         echoSocket.close();
       } catch (UnknownHostException e) {
          System.err.println("Don't know about host.");
          System.exit(1);
