@@ -23,6 +23,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
+import org.perf4j.StopWatch;
+import org.perf4j.log4j.Log4JStopWatch;
 
 /**
  * Test-Main Klasse.
@@ -49,9 +51,8 @@ public final class Main {
     */
    public static void main(final String[] args) throws IOException {
 
-      
-      
-      
+      StopWatch sw = new Log4JStopWatch(logger);
+      sw.start("test");
       Socket echoSocket = null;
       PrintWriter out = null;
       BufferedReader in = null;
@@ -79,6 +80,9 @@ public final class Main {
          logger.error("Don't know about host.", e);
       } catch (IOException e) {
          logger.error("Couldn't get I/O to host.", e);
+      }
+      finally {
+         sw.stop("test");
       }
    }
 }
