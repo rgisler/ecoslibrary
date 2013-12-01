@@ -17,28 +17,30 @@
  */
 package ch.gitik.ecos;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 /**
+ * Testfälle für {@link ch.gitik.ecos.AbstractConnection}.
  * @author Roland Gisler
  * @version $Revision$
  */
 public class AbstractConnectionTest {
 
-   @Test
-   public void testIsResultOk() {
-      // TODO not implemented
-      // fail("Not yet implemented");
-   }
-
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#isResultValid(String)}.
+    */
    @Test
    public void testIsResultValidOk() {
       assertTrue(AbstractConnection.isResultValid("<REPLY><END>"));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#isResultValid(String)}.
+    */
    @Test
    public void testIsResultValidNotOk() {
       assertFalse(AbstractConnection.isResultValid("EMPTY"));
@@ -46,36 +48,57 @@ public class AbstractConnectionTest {
       assertFalse(AbstractConnection.isResultValid("<END>"));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#getResultCode(String)}.
+    */
    @Test
    public void testGetResultCodeOk() {
       assertEquals(0, AbstractConnection.getResultCode("<END 0 OK>"));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#getResultCode(String)}.
+    */
    @Test
    public void testGetResultCodeInvalid() {
       assertEquals(99999, AbstractConnection.getResultCode("0 invalid>"));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#getResultCode(String)}.
+    */
    @Test
    public void testGetResultCodeOk100() {
       assertEquals(100, AbstractConnection.getResultCode("<END 100 Hundert>"));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#getResultCode(String)}.
+    */
    @Test
    public void testGetResultCodeMissing() {
       assertEquals(AbstractConnection.ERROR_RESULT, AbstractConnection.getResultCode("<FAILED>"));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#getResultCode(String)}.
+    */
    @Test
    public void testGetResultCodeEmptyString() {
       assertEquals(AbstractConnection.ERROR_RESULT, AbstractConnection.getResultCode(""));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#getResultCode(String)}.
+    */
    @Test
    public void testGetResultCodeNullString() {
       assertEquals(AbstractConnection.ERROR_RESULT, AbstractConnection.getResultCode(null));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.AbstractConnection#getAttribute(String, String)}.
+    */
    @Test
    public void testGetAttribute() {
       assertEquals("value", AbstractConnection.getAttribute("something AnAttribute[value] other stuff", "AnAttribute"));

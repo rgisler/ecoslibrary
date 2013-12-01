@@ -22,16 +22,23 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * Testfälle für {@link ch.gitik.ecos.EcosFacade}.
  * @author Roland Gisler
  * @version $Revision$
  */
 public class EcosFacadeTest {
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.EcosFacade#getName()}.
+    */
    @Test
    public void testGetName() {
       assertEquals("ECoS", new EcosFacade().getName());
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.EcosFacade#getHardwareVersion()}.
+    */
    @Test
    public void testGetHardwareVersion() {
       assertEquals("1.3", new EcosFacade().getHardwareVersion());

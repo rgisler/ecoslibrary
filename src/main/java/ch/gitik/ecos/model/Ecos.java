@@ -21,6 +21,9 @@ package ch.gitik.ecos.model;
  */
 public final class Ecos {
 
+   /**
+    * Fixe Adressierung für Ecos-System.
+    */
    public static final String ID = "1";
 
    private final String name;

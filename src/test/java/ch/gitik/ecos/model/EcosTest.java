@@ -39,34 +39,48 @@ public class EcosTest {
       assertNotNull(test);
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.model.Ecos#getName()}.
+    */
    @Test
    public void testGetName() {
       Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertEquals("Name", test.getName());
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.model.Ecos#getHardwareVersion()}.
+    */
    @Test
    public void testGetHWVersion() {
       Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertEquals("1.0.0", test.getHardwareVersion());
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.model.Ecos#getSoftwareversion()}.
+    */
    @Test
    public void testGetSWVersion() {
       Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertEquals("2.0.0", test.getSoftwareversion());
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.model.Ecos#isActive()}.
+    */
    @Test
    public void testGetIsActive() {
       Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertTrue(test.isActive());
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.model.Ecos#toString()}.
+    */
    @Test
    public void testToString() {
       Ecos test = new Ecos("Name", "1.0.0", "2.0.0", true);
       assertTrue(test.toString().contains("2.0.0"));
    }
-
 }

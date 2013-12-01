@@ -22,11 +22,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Mock-Klasse fuer Simulation.
+ * Mock-Klasse fuer Simulation. Besser durch richtigen Mock realisieren!
  * @author Roland Gisler
  */
 public class ConnectionEcosMockTest {
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.ConnectionEcosMock}.
+    */
    @Test
    public void testGetEcOS() {
       AbstractConnection con = new ConnectionEcosMock();
@@ -35,6 +38,9 @@ public class ConnectionEcosMockTest {
       assertTrue(AbstractConnection.isResultOk(answer));
    }
 
+   /**
+    * Testfall für {@link ch.gitik.ecos.ConnectionEcosMock}.
+    */
    @Test
    public void testInvalidCommand() {
       AbstractConnection con = new ConnectionEcosMock();
