@@ -33,6 +33,7 @@ import org.perf4j.log4j.Log4JStopWatch;
 public final class Main {
 
    private static final String IP_ADRESS = "192.168.0.120";
+
    private static final int PORT = 15471;
 
    private static Logger logger = Logger.getLogger(Main.class.getName());
@@ -47,7 +48,8 @@ public final class Main {
     * Test-Main.
     * @param args
     *           String Array mit Parametern.
-    * @throws IOException IOExcption.
+    * @throws IOException
+    *            IOExcption.
     */
    public static void main(final String[] args) throws IOException {
 
@@ -80,8 +82,7 @@ public final class Main {
          logger.error("Don't know about host.", e);
       } catch (IOException e) {
          logger.error("Couldn't get I/O to host.", e);
-      }
-      finally {
+      } finally {
          sw.stop("test");
       }
    }
