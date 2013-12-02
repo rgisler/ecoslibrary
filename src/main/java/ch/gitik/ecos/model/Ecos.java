@@ -93,4 +93,50 @@ public final class Ecos {
             + this.softwareversion + ", Aktiv: " + this.active;
    }
 
+   /**
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + (active ? 1231 : 1237);
+      result = prime * result + ((hardwareVersion == null) ? 0 : hardwareVersion.hashCode());
+      result = prime * result + ((name == null) ? 0 : name.hashCode());
+      result = prime * result + ((softwareversion == null) ? 0 : softwareversion.hashCode());
+      return result;
+   }
+
+   /**
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj)
+         return true;
+      if (obj == null)
+         return false;
+      if (getClass() != obj.getClass())
+         return false;
+      Ecos other = (Ecos) obj;
+      if (active != other.active)
+         return false;
+      if (hardwareVersion == null) {
+         if (other.hardwareVersion != null)
+            return false;
+      } else if (!hardwareVersion.equals(other.hardwareVersion))
+         return false;
+      if (name == null) {
+         if (other.name != null)
+            return false;
+      } else if (!name.equals(other.name))
+         return false;
+      if (softwareversion == null) {
+         if (other.softwareversion != null)
+            return false;
+      } else if (!softwareversion.equals(other.softwareversion))
+         return false;
+      return true;
+   }
+
 }

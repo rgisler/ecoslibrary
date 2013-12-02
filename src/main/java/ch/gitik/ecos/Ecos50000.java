@@ -15,6 +15,8 @@
  */
 package ch.gitik.ecos;
 
+import ch.gitik.ecos.model.Ecos;
+
 /**
  * Implementation für Ecos 50000 und 50022.
  * @author Roland Gisler
@@ -78,5 +80,13 @@ public class Ecos50000 implements EcosInterface {
    @Override
    public final void setIp(final String ip) {
       this.ip = ip;
+   }
+
+   /**
+    * @see ch.gitik.ecos.EcosInterface#getEcosInfo()
+    */
+   @Override
+   public Ecos getEcosInfo() {
+      return new Ecos("Name", "Version", "swVersion", true);
    }
 }

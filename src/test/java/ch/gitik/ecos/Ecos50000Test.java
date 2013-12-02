@@ -20,6 +20,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
+import ch.gitik.ecos.model.Ecos;
+
 /**
  * @author Roland Gisler
  * @version $Revision$
@@ -60,5 +62,14 @@ public class Ecos50000Test {
       EcosInterface ecos = new Ecos50000();
       ecos.connect("101.102.103.104", 8888);
       assertThat(ecos.getPort(), equalTo(8888));
+   }
+
+   /**
+    * Test method for {@link ch.gitik.ecos.Ecos50000#getEcosInfo()}.
+    */
+   @Test
+   public final void testGetEcosInfo() {
+      EcosInterface ecos = new Ecos50000();
+      assertThat(ecos.getEcosInfo(), equalTo(new Ecos("Name","Version","swVersion",true)));
    }
 }

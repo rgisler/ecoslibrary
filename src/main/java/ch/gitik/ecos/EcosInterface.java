@@ -15,6 +15,8 @@
  */
 package ch.gitik.ecos;
 
+import ch.gitik.ecos.model.Ecos;
+
 /**
  * Schnittstelle zur Ecos Zentrale.
  * @author Roland Gisler
@@ -62,4 +64,9 @@ public interface EcosInterface {
     */
    void setIp(String ip);
 
+   /**
+    * Liefert den Zustand der Zentrale.
+    * @return Ecos Model.
+    */
+   Ecos getEcosInfo();
 }
